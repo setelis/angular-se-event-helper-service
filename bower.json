@@ -1,0 +1,30 @@
+{
+  "name": "angular-se-event-helper-service",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "~1.4.3"
+  },
+  "devDependencies": {
+  },
+  "homepage": "https://github.com/setelis/angular-se-event-helper-service",
+  "authors": [
+    "Plamen Tanov <ptanov@setelis.com>"
+  ],
+  "description": "Simple Event Helper used in many Setelis projects",
+  "main": ["src/seEventHelperService.js"],
+  "keywords": [
+    "angular",
+    "event",
+    "helper"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "demo",
+    "flow"
+  ]
+}
