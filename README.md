@@ -15,6 +15,9 @@ Simple Event Helper used in many Setelis projects.
  - Add module to your project: ```angular.module("DemoApp", ["seEventHelperService"])...```
  - use ```SeEventHelperService``` methods
 
+# Dependencies:
+ - ui router - bootstrap dialog state
+
 # For developers:
 # Setup
 

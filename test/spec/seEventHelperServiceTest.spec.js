@@ -1,7 +1,7 @@
 describe("SeEventHelperService", function () {
 	"use strict";
 
-	beforeEach(module("seEventHelperService", function() {
+	beforeEach(module("seEvents.seEventHelperService", function() {
 	}));
 	beforeEach(inject(function () {
 	}));
