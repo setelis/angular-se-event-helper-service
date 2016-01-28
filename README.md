@@ -11,8 +11,8 @@ Simple Event Helper used in many Setelis projects.
 
 # Install:
 
- - Add library to your project: ```bower install angular-se-event-helper-service --save```
- - Add module to your project: ```angular.module("DemoApp", ["seEventHelperService"])...```
+ - Add library to your project: ```bower install angular-se-events --save```
+ - Add module to your project: ```angular.module("DemoApp", ["seEvents"])...```
  - use ```SeEventHelperService``` methods
 
 # Dependencies:
