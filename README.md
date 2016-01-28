@@ -1,6 +1,6 @@
 # What is this
 
-Simple Event Helper used in many Setelis projects.
+Simple Event Helper used in many Setelis projects + bootstrap dialog handler
 
  * ```SeEventHelperService.stopEvent(event)``` - stop event propagation and default action
 

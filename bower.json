@@ -1,6 +1,6 @@
 {
   "name": "angular-se-events",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "dependencies": {
     "angular": "~1.4.3",
     "angular-ui-router": "~0.2.15"
@@ -14,7 +14,7 @@
     "Plamen Tanov <ptanov@setelis.com>"
   ],
   "description": "Simple Event Helper used in many Setelis projects",
-  "main": ["src/seEventsModule", "src/seEventHelperService.js", "src/seBootstrapDialogDirective.js"],
+  "main": ["src/seEventsModule.js", "src/seEventHelperService.js", "src/seBootstrapDialogDirective.js"],
   "keywords": [
     "angular",
     "event",
