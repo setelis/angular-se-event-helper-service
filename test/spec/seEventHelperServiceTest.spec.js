@@ -155,6 +155,18 @@ describe("SeEventHelperService", function () {
 		beforeEach(inject(function () {
 			callback = jasmine.createSpy("callback");
 		}));
+		it("should not call callback if field is changed", inject(function () {
+			scope.a = {};
+			SeEventHelperService.whenChanged(scope, "a", callback);
+			scope.$digest();
+			expect(callback.calls.count()).toBe(0);
+
+			scope.a.b = "hello";
+			expect(callback.calls.count()).toBe(0);
+
+			scope.$digest();
+			expect(callback.calls.count()).toBe(0);
+		}));
 
 		it("should call callback if value is set", inject(function () {
 			SeEventHelperService.whenChanged(scope, "a", callback);
@@ -182,7 +194,7 @@ describe("SeEventHelperService", function () {
 			expect(callback.calls.count()).toBe(1);
 			expect(callback.calls.first().args[0]).toBe("hello2");
 		}));
-		it("should call callback if value is twice", inject(function () {
+		it("should call callback if value is changed twice", inject(function () {
 			SeEventHelperService.whenChanged(scope, "a", callback);
 			scope.$digest();
 			expect(callback.calls.count()).toBe(0);
@@ -202,6 +214,76 @@ describe("SeEventHelperService", function () {
 			scope.$digest();
 			expect(callback.calls.count()).toBe(2);
 			expect(callback.calls.mostRecent().args[0]).toBe("hello2");
+		}));
+
+	});
+	describe("whenChangedCollection", function () {
+		var callback;
+		beforeEach(inject(function () {
+			callback = jasmine.createSpy("callback");
+		}));
+		it("should call callback if field is changed", inject(function () {
+			scope.a = {};
+			SeEventHelperService.whenChangedCollection(scope, "a", callback);
+			scope.$digest();
+			expect(callback.calls.count()).toBe(0);
+
+			scope.a.b = "hello";
+			expect(callback.calls.count()).toBe(0);
+
+			scope.$digest();
+			expect(callback.calls.count()).toBe(1);
+			expect(callback.calls.first().args[0]).toBe(scope.a);
+		}));
+
+		it("should call callback if value is set", inject(function () {
+			scope.a = {};
+
+			SeEventHelperService.whenChangedCollection(scope, "a", callback);
+			scope.$digest();
+			expect(callback.calls.count()).toBe(0);
+
+			scope.a = "hello";
+			expect(callback.calls.count()).toBe(0);
+
+			scope.$digest();
+			expect(callback.calls.count()).toBe(1);
+			expect(callback.calls.first().args[0]).toBe(scope.a);
+		}));
+		it("should not call callback if value is set before whenChangedCollection()", inject(function () {
+			scope.a = {b:"hello"};
+
+			SeEventHelperService.whenChangedCollection(scope, "a", callback);
+			scope.$digest();
+			expect(callback.calls.count()).toBe(0);
+
+			scope.a.b = "hello2";
+			expect(callback.calls.count()).toBe(0);
+
+			scope.$digest();
+			expect(callback.calls.count()).toBe(1);
+			expect(callback.calls.first().args[0]).toBe(scope.a);
+		}));
+		it("should call callback if value is changed twice", inject(function () {
+			SeEventHelperService.whenChangedCollection(scope, "a", callback);
+			scope.$digest();
+			expect(callback.calls.count()).toBe(0);
+
+			scope.a = {b:"hello"};
+			expect(callback.calls.count()).toBe(0);
+
+			scope.$digest();
+			expect(callback.calls.count()).toBe(1);
+			expect(callback.calls.first().args[0]).toBe(scope.a);
+
+			scope.$digest();
+			expect(callback.calls.count()).toBe(1);
+			scope.a.b = "hello2";
+			expect(callback.calls.count()).toBe(1);
+
+			scope.$digest();
+			expect(callback.calls.count()).toBe(2);
+			expect(callback.calls.mostRecent().args[0]).toBe(scope.a);
 		}));
 
 	});
