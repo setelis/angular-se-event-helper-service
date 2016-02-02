@@ -1,4 +1,4 @@
-angular.module("seEvents.seEventHelperService", []).service("SeEventHelperService", function () {
+angular.module("seEvents.seEventHelperService", []).service("SeEventHelperService", function ($q) {
 	"use strict";
 	var service = this;
 
@@ -28,6 +28,18 @@ angular.module("seEvents.seEventHelperService", []).service("SeEventHelperServic
 		} else {
 			scope.$apply(fn);
 		}
+	};
+
+	service.whenSet = function(scope, check) {
+		var result = $q.defer();
+
+		var deregister = scope.$watch(check, function(newValue) {
+			if (newValue) {
+				deregister();
+				result.resolve(newValue);
+			}
+		});
+		return result.promise;
 	};
 
 });
