@@ -41,5 +41,15 @@ angular.module("seEvents.seEventHelperService", []).service("SeEventHelperServic
 		});
 		return result.promise;
 	};
+	service.whenChanged = function(scope, check, callback) {
+		var firstTime = false;
+		var deregister = scope.$watch(check, function() {
+			if (firstTime) {
+				deregister();
+				scope.$watch(check, callback);
+			}
+			firstTime = true;
+		});
+	};
 
 });
