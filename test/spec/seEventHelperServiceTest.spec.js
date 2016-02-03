@@ -215,6 +215,47 @@ describe("SeEventHelperService", function () {
 			expect(callback.calls.count()).toBe(2);
 			expect(callback.calls.mostRecent().args[0]).toBe("hello2");
 		}));
+		describe("objectEquality", function () {
+			it("should not call callback if field of a is changed", inject(function () {
+				scope.a = {};
+				SeEventHelperService.whenChanged(scope, "a", callback);
+				scope.$digest();
+				expect(callback.calls.count()).toBe(0);
+
+				scope.a.b = "hello";
+				expect(callback.calls.count()).toBe(0);
+
+				scope.$digest();
+				expect(callback.calls.count()).toBe(0);
+			}));
+			it("should call callback if field of a is changed and objectEquality is set", inject(function () {
+				scope.a = {};
+				SeEventHelperService.whenChanged(scope, "a", callback, true);
+				scope.$digest();
+				expect(callback.calls.count()).toBe(0);
+
+				scope.a.b = "hello";
+				expect(callback.calls.count()).toBe(0);
+
+				scope.$digest();
+				expect(callback.calls.count()).toBe(1);
+				expect(callback.calls.first().args[0]).toBe(scope.a);
+			}));
+			it("should call callback if field of a is changed and objectEquality is set - one level deep", inject(function () {
+				scope.a = {b: {}};
+				SeEventHelperService.whenChanged(scope, "a", callback, true);
+				scope.$digest();
+				expect(callback.calls.count()).toBe(0);
+
+				scope.a.b.c = "hello";
+				expect(callback.calls.count()).toBe(0);
+
+				scope.$digest();
+				expect(callback.calls.count()).toBe(1);
+				expect(callback.calls.first().args[0]).toBe(scope.a);
+			}));
+
+		});
 
 	});
 	describe("whenChangedCollection", function () {
@@ -285,6 +326,35 @@ describe("SeEventHelperService", function () {
 			expect(callback.calls.count()).toBe(2);
 			expect(callback.calls.mostRecent().args[0]).toBe(scope.a);
 		}));
+		describe("objectEquality", function () {
+			it("should call callback if field of a is changed and objectEquality is set", inject(function () {
+				scope.a = {};
+				SeEventHelperService.whenChangedCollection(scope, "a", callback);
+				scope.$digest();
+				expect(callback.calls.count()).toBe(0);
+
+				scope.a.b = "hello";
+				expect(callback.calls.count()).toBe(0);
+
+				scope.$digest();
+				expect(callback.calls.count()).toBe(1);
+				expect(callback.calls.first().args[0]).toBe(scope.a);
+			}));
+			it("should not call callback if field of a is changed and objectEquality is set - one level deep", inject(function () {
+				scope.a = {b: {}};
+				SeEventHelperService.whenChangedCollection(scope, "a", callback);
+				scope.$digest();
+				expect(callback.calls.count()).toBe(0);
+
+				scope.a.b.c = "hello";
+				expect(callback.calls.count()).toBe(0);
+
+				scope.$digest();
+				expect(callback.calls.count()).toBe(0);
+			}));
+
+		});
+
 
 	});
 
